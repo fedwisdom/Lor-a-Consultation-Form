@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loréa – Consultation QR code</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Jost:wght@400&display=swap">
+<style>
+:root{--bg:#faf6ef;--ink:#2e2a27;--mute:#7a7068;--gold:#9c7a3c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f1b18;--ink:#f1e9dc;--mute:#b3a898;--gold:#d2ae6d}}
+:root[data-theme="dark"]{--bg:#1f1b18;--ink:#f1e9dc;--mute:#b3a898;--gold:#d2ae6d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Jost,system-ui,sans-serif;text-align:center}
+main{max-width:420px;margin:0 auto;padding:36px 20px}
+.mark{font:600 40px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold);margin:0}
+h1{font:600 24px/1.2 "Cormorant Garamond",Georgia,serif;margin:14px 0 4px}
+p{margin:0;color:var(--mute)}
+#qr{background:#fff;padding:18px;border-radius:12px;display:inline-block;margin:24px 0 12px}
+#qr svg{display:block;width:260px;max-width:100%;height:auto}
+</style>
+</head>
+<body>
+<main>
+  <p class="mark">Loréa</p>
+  <h1>Scan to begin your skin consultation</h1>
+  <p>Point your phone camera at the code.</p>
+  <div id="qr" aria-label="QR code linking to the consultation form"></div>
+  <p>To print: use your browser’s Print option or take a screenshot of this code.</p>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+try{
+  var q=qrcode(0,"M");q.addData("PASTE_YOUR_FORM_URL_HERE");q.make();
+  document.getElementById("qr").innerHTML=q.createSvgTag({cellSize:6,margin:0,scalable:true});
+}catch(e){document.getElementById("qr").textContent="The QR code could not be drawn."}
+</script>
+</body>
+</html>

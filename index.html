@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loréa Esthétique Atelier – Skin Consultation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap">
+<style>
+:root{--bg:#faf6ef;--card:#fffdf9;--ink:#2e2a27;--mute:#7a7068;--gold:#9c7a3c;--line:#e3d9c8;--err:#a63d2f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f1b18;--card:#2a2521;--ink:#f1e9dc;--mute:#b3a898;--gold:#d2ae6d;--line:#4a4239;--err:#ef8a7a}}
+:root[data-theme="dark"]{--bg:#1f1b18;--card:#2a2521;--ink:#f1e9dc;--mute:#b3a898;--gold:#d2ae6d;--line:#4a4239;--err:#ef8a7a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Jost,system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:28px 18px 56px}
+header{text-align:center;padding:12px 0 22px}
+.mark{font:600 44px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.04em;color:var(--gold);margin:0}
+.sub{font:500 13px/1.4 Jost,sans-serif;color:var(--mute);letter-spacing:.14em;margin:6px 0 0}
+h1{font:600 26px/1.2 "Cormorant Garamond",Georgia,serif;margin:18px 0 4px}
+header p{margin:0;color:var(--mute)}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 18px;margin:16px 0}
+h2{font:600 22px/1.2 "Cormorant Garamond",Georgia,serif;margin:0 0 14px;color:var(--gold)}
+.f{margin:0 0 16px}
+.f>label,.f>.q{display:block;font-weight:500;margin-bottom:6px}
+.req::after{content:" *";color:var(--err)}
+input[type=text],input[type=tel],input[type=email],input[type=date],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 12px}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,textarea:focus-visible,.opt:focus-within{outline:2px solid var(--gold);outline-offset:1px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--bg);cursor:pointer;min-height:44px}
+.opt input{accent-color:var(--gold);width:18px;height:18px;margin:0}
+.grid .opt{flex:1 1 calc(50% - 8px)}
+.err{color:var(--err);font-size:14px;margin-top:4px;display:none}
+.bad .err{display:block}.bad input[type=text],.bad input[type=tel],.bad input[type=email],.bad input[type=date],.bad textarea{border-color:var(--err)}
+.note{color:var(--mute);font-size:15px}
+button{font:500 17px Jost,sans-serif;background:var(--gold);color:#fff;border:0;border-radius:10px;padding:14px 20px;width:100%;cursor:pointer;min-height:48px}
+:root[data-theme="dark"] button{color:#1f1b18}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button{color:#1f1b18}}
+button:disabled{opacity:.6}
+.done{text-align:center;padding:40px 10px}
+.hide{display:none}
+table{border-collapse:collapse;font-size:14px;min-width:100%}td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;white-space:nowrap}
+.scroll{overflow-x:auto}
+.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold);width:auto;padding:8px 14px;min-height:40px;font-size:15px}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <p class="mark">Loréa Esthétique Atelier</p>
+  <p class="sub">· BEAUTY ·BLESSED ·REFINED</p>
+  <h1>Skin consultation</h1>
+  <p>Please complete this form before your appointment. It takes about 5 minutes.</p>
+</header>
+<form id="form" novalidate></form>
+<div id="done" class="done hide">
+  <h2>Thank you</h2>
+  <p>Your consultation form has been received. We look forward to seeing you.</p>
+</div>
+</main>
+<script>
+var today=new Date().toISOString().slice(0,10);
+var GOALS=["Acne / Breakouts","Acne scars","Hyperpigmentation / Dark spots","Uneven skin tone","Uneven texture","Enlarged pores","Congestion / Blackheads","Fine lines & wrinkles","Dull / Tired skin","Excess oil","Dry / Dehydrated skin","Sensitivity / Redness"];
+var YN=["Yes","No"];
+var S=[
+ {t:"Client information",f:[
+  {k:"fullName",l:"Full name",y:"text",r:1},{k:"dob",l:"Date of birth",y:"date",r:1},
+  {k:"phone",l:"Phone number",y:"tel",r:1},{k:"email",l:"Email",y:"email",r:1},
+  {k:"occupation",l:"Occupation",y:"text"},{k:"consultDate",l:"Date of consultation",y:"date",v:today},
+  {k:"practitioner",l:"Practitioner (if known)",y:"text"}]},
+ {t:"Your skin goals",f:[
+  {k:"goals",l:"What would you most like to improve about your skin?",y:"check",o:GOALS,g:1},
+  {k:"goalsOther",l:"Other",y:"text"},
+  {k:"mainConcern",l:"What is your main skin concern?",y:"area",r:1},
+  {k:"desiredLook",l:"What would you like your skin to look and feel like?",y:"area"}]},
+ {t:"Skin history",f:[
+  {k:"duration",l:"How long have you experienced your current skin concerns?",y:"text"},
+  {k:"prevTreatments",l:"Have you previously received professional skin treatments?",y:"radio",o:YN,r:1},
+  {k:"prevTreatmentsInfo",l:"Please specify",y:"text",d:"prevTreatments"},
+  {k:"reactions",l:"Have you experienced any reactions to skincare products or treatments?",y:"radio",o:YN,r:1},
+  {k:"reactionsInfo",l:"Please explain",y:"text",d:"reactions"}]},
+ {t:"Current skincare routine",f:[
+  {k:"morning",l:"Morning routine",y:"area"},{k:"evening",l:"Evening routine",y:"area"},
+  {k:"products",l:"Products currently being used",y:"area"},
+  {k:"sunscreen",l:"How often do you use sunscreen?",y:"radio",o:["Daily","Sometimes","Rarely","Never"],r:1}]},
+ {t:"Lifestyle & skin factors",f:[
+  {k:"water",l:"Water intake",y:"radio",o:["Low","Moderate","High"]},
+  {k:"sleep",l:"Sleep",y:"radio",o:["Less than 5 hours","5–7 hours","7+ hours"]},
+  {k:"stress",l:"Stress level",y:"radio",o:["Low","Moderate","High"]},
+  {k:"picking",l:"Do you frequently touch, pick or squeeze your skin?",y:"radio",o:YN},
+  {k:"makeup",l:"Do you wear makeup regularly?",y:"radio",o:YN}]},
+ {t:"Client commitment",n:"I understand that achieving meaningful skin improvement requires consistency with my recommended professional treatments, homecare routine, sun protection and lifestyle practices.",f:[
+  {k:"agree",l:"I understand and agree",y:"one",r:1},
+  {k:"signature",l:"Type your full name as your signature",y:"text",r:1},
+  {k:"signDate",l:"Date",y:"date",v:today,r:1}]}
+];
+var form=document.getElementById("form"),all=[];
+function el(t,a,h){var e=document.createElement(t);for(var k in a)e.setAttribute(k,a[k]);if(h!=null)e.textContent=h;return e}
+S.forEach(function(s){
+  var sec=el("section"),h=el("h2",{},s.t);sec.appendChild(h);
+  if(s.n)sec.appendChild(el("p",{class:"note"},s.n));
+  s.f.forEach(function(f){
+    all.push(f);var w=el("div",{class:"f","data-k":f.k}),id="i_"+f.k;
+    if(f.y==="one"){
+      var o=el("label",{class:"opt"}),c=el("input",{type:"checkbox",id:id,name:f.k});
+      o.appendChild(c);o.appendChild(el("span",{},f.l));w.appendChild(o);
+    }else{
+      w.appendChild(el(f.y==="text"||f.y==="tel"||f.y==="email"||f.y==="date"||f.y==="area"?"label":"div",
+        f.y==="check"||f.y==="radio"?{class:"q"+(f.r?" req":"")}:{for:id,class:f.r?"req":""},f.l));
+      if(f.y==="area")w.appendChild(el("textarea",{id:id,name:f.k,rows:3}));
+      else if(f.y==="check"||f.y==="radio"){
+        var box=el("div",{class:"opts"+(f.g?" grid":""),role:f.y==="radio"?"radiogroup":"group"});
+        f.o.forEach(function(v){var o=el("label",{class:"opt"}),c=el("input",{type:f.y==="check"?"checkbox":"radio",name:f.k,value:v});o.appendChild(c);o.appendChild(el("span",{},v));box.appendChild(o)});
+        w.appendChild(box);
+      }else{var i=el("input",{type:f.y,id:id,name:f.k,autocomplete:f.k==="fullName"?"name":f.k==="phone"?"tel":f.k==="email"?"email":"off"});if(f.v)i.value=f.v;w.appendChild(i)}
+    }
+    w.appendChild(el("div",{class:"err"},"Please complete this field."));
+    if(f.d)w.classList.add("hide");
+    sec.appendChild(w);
+  });
+  form.appendChild(sec);
+});
+var btn=el("button",{type:"submit"},"Submit form");form.appendChild(btn);
+var msg=el("p",{class:"err",style:"display:none;text-align:center;margin-top:12px"});form.appendChild(msg);
+
+function val(f){
+  if(f.y==="check"){return Array.prototype.map.call(form.querySelectorAll('[name="'+f.k+'"]:checked'),function(x){return x.value})}
+  if(f.y==="radio"){var c=form.querySelector('[name="'+f.k+'"]:checked');return c?c.value:""}
+  if(f.y==="one")return form.querySelector('[name="'+f.k+'"]').checked;
+  return form.querySelector('[name="'+f.k+'"]').value.trim();
+}
+form.addEventListener("change",function(){all.forEach(function(f){if(f.d){form.querySelector('[data-k="'+f.k+'"]').classList.toggle("hide",val({k:f.d,y:"radio"})!=="Yes")}})});
+
+// Paste the Web app URL from Google Apps Script here (see google-apps-script.gs)
+var ENDPOINT="https://script.google.com/macros/s/AKfycbwv8IBd_n87GKoFUkqlFxNGEFNtAuTfcZBVtm2c0y02uahKjaw-MtGCE-OySV1a0Z-YOA/exec";
+form.addEventListener("submit",async function(e){
+  e.preventDefault();var ok=true,first=null,data={};
+  all.forEach(function(f){
+    var v=val(f);data[f.k]=v;var w=form.querySelector('[data-k="'+f.k+'"]');
+    var bad=f.r&&(f.y==="one"?!v:!v||!v.length)||(f.y==="email"&&v&&!/^\S+@\S+\.\S+$/.test(v));
+    w.classList.toggle("bad",!!bad);if(bad){ok=false;first=first||w}
+  });
+  if(!ok){first.scrollIntoView({behavior:"smooth",block:"center"});return}
+  btn.disabled=true;btn.textContent="Sending…";msg.style.display="none";
+  data.submittedAt=new Date().toISOString();
+  try{
+    if(ENDPOINT.indexOf("PASTE")===0)throw new Error("not configured");
+    await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
+    form.classList.add("hide");document.getElementById("done").classList.remove("hide");window.scrollTo(0,0);
+  }catch(x){
+    btn.disabled=false;btn.textContent="Submit form";msg.style.display="block";
+    msg.textContent="We couldn’t send your form. Please check your connection and try again, or give your details to the front desk.";
+  }
+});
+
+</script>
+</body>
+</html>
