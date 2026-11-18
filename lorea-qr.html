@@ -30,7 +30,7 @@ p{margin:0;color:var(--mute)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
 try{
-  var q=qrcode(0,"M");q.addData("PASTE_YOUR_FORM_URL_HERE");q.make();
+  var q=qrcode(0,"M");q.addData("https://fedwisdom.github.io/Lor-a-Consultation-Form/");q.make();
   document.getElementById("qr").innerHTML=q.createSvgTag({cellSize:6,margin:0,scalable:true});
 }catch(e){document.getElementById("qr").textContent="The QR code could not be drawn."}
 </script>
